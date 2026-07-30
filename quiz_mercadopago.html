@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz — Ecossistema Mercado Pago</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #1a1a2e; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: 'Montserrat', sans-serif; padding: 16px; }
+  #kh { width: 100%; max-width: 680px; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.5); }
+  .kh-sc { display: none; }
+  .kh-sc.on { display: block; }
+  .kh-abtn { width: 100%; border: none; border-radius: 8px; padding: 14px 12px; font-size: 13px; font-weight: 500; font-family: 'Montserrat', sans-serif; cursor: pointer; text-align: left; display: flex; align-items: flex-start; gap: 10px; min-height: 72px; line-height: 1.35; color: #fff; transition: opacity .3s, filter .15s; }
+  .kh-abtn:hover:not([disabled]) { filter: brightness(1.12); }
+  .kh-nbtn { display: block; width: 100%; background: #fff; color: #46178f; border: none; font-size: 16px; font-weight: 700; font-family: 'Montserrat', sans-serif; padding: 16px; cursor: pointer; }
+  .kh-nbtn:hover { background: #ede8ff; }
+  .name-input { width: 100%; padding: 13px 16px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.12); color: #fff; font-size: 16px; font-family: 'Montserrat', sans-serif; font-weight: 500; text-align: center; outline: none; transition: border-color .2s; }
+  .name-input::placeholder { color: rgba(255,255,255,0.45); }
+  .name-input:focus { border-color: #FFD700; }
+  .rank-row { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-radius: 8px; margin-bottom: 6px; background: rgba(255,255,255,0.08); font-size: 13px; color: #fff; }
+  .rank-medal { font-size: 18px; width: 24px; text-align: center; flex-shrink: 0; }
+  .rank-name { flex: 1; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rank-score { font-weight: 700; color: #FFD700; flex-shrink: 0; }
+  .rank-detail { font-size: 11px; color: rgba(255,255,255,0.5); flex-shrink: 0; }
+  @keyframes bounce-in { 0% { transform: scale(0) rotate(-15deg); } 55% { transform: scale(1.3) rotate(5deg); } 75% { transform: scale(.92); } 100% { transform: scale(1) rotate(0); } }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 15% { transform: translateX(-14px) rotate(-3deg); } 30% { transform: translateX(14px) rotate(3deg); } 50% { transform: translateX(-10px); } 70% { transform: translateX(10px); } 85% { transform: translateX(-5px); } }
+  @keyframes wiggle { 0%,100% { transform: rotate(0) scale(1); } 25% { transform: rotate(-9deg) scale(1.06); } 75% { transform: rotate(9deg) scale(1.06); } }
+  @keyframes pulse-pop { 0%,100% { transform: scale(1); } 50% { transform: scale(1.07); } }
+  @keyframes slide-up { 0% { opacity: 0; transform: translateY(18px); } 100% { opacity: 1; transform: translateY(0); } }
+  @keyframes confetti-drop { 0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); } 100% { opacity: 0; transform: translateY(200px) rotate(600deg) scale(.4); } }
+  @keyframes tada { 0% { transform: scale(1); } 10% { transform: scale(.96) rotate(-3deg); } 20% { transform: scale(1.06) rotate(3deg); } 30% { transform: scale(1.06) rotate(-3deg); } 40% { transform: scale(1.06) rotate(3deg); } 50% { transform: scale(1.06) rotate(-3deg); } 60% { transform: scale(1.06) rotate(3deg); } 70% { transform: scale(1.06) rotate(-3deg); } 80% { transform: scale(1.06) rotate(3deg); } 90% { transform: scale(1.06) rotate(-3deg); } 100% { transform: scale(1) rotate(0); } }
+  .a-bounce { animation: bounce-in .55s cubic-bezier(.34,1.56,.64,1) forwards; }
+  .a-shake  { animation: shake .6s ease forwards; }
+  .a-wiggle { animation: wiggle 1.8s ease-in-out infinite; }
+  .a-slide  { animation: slide-up .38s ease forwards; }
+  .a-tada   { animation: tada .9s ease forwards; }
+</style>
+</head>
+<body>
+
+<div id="kh">
+
+  <!-- START -->
+  <div id="sc-start" class="kh-sc on">
+    <div style="background:#46178f;padding:2.5rem 2rem;text-align:center;min-height:420px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+      <div id="ms-idle" class="a-wiggle" style="margin-bottom:1.2rem;display:inline-block;"></div>
+      <h1 style="color:#fff;font-size:24px;font-weight:700;margin:0 0 6px;line-height:1.25;">Ecossistema Mercado Pago</h1>
+      <p style="color:rgba(255,255,255,0.65);font-size:13px;margin:0 0 1.4rem;">35 perguntas · Responda todas e mostre que sabe tudo!</p>
+      <div style="display:flex;gap:28px;margin-bottom:1.6rem;">
+        <div style="text-align:center;color:rgba(255,255,255,0.7);font-size:12px;"><div style="font-size:22px;font-weight:700;color:#fff;line-height:1.2;">35</div>perguntas</div>
+        <div style="text-align:center;color:rgba(255,255,255,0.7);font-size:12px;"><div style="font-size:22px;font-weight:700;color:#fff;line-height:1.2;">1000</div>pts máx</div>
+        <div style="text-align:center;color:rgba(255,255,255,0.7);font-size:12px;"><div style="font-size:22px;font-weight:700;color:#fff;line-height:1.2;">60s</div>por turno</div>
+      </div>
+      <div style="width:100%;max-width:320px;margin-bottom:1rem;">
+        <input id="player-name" class="name-input" type="text" maxlength="24" placeholder="Digite seu nome para jogar..." autocomplete="off"/>
+      </div>
+      <div id="name-err" style="color:#ffaaaa;font-size:12px;margin-bottom:8px;min-height:18px;"></div>
+      <button onclick="khStart()" style="background:#FFD700;color:#46178f;border:none;border-radius:10px;font-size:18px;font-weight:700;padding:14px 56px;cursor:pointer;animation:pulse-pop 1.6s ease-in-out infinite;margin-bottom:1.2rem;">Jogar!</button>
+      <button onclick="showRanking()" style="background:transparent;color:rgba(255,255,255,0.7);border:1.5px solid rgba(255,255,255,0.3);border-radius:8px;font-size:13px;font-weight:600;padding:9px 24px;cursor:pointer;font-family:'Montserrat',sans-serif;">🏆 Ver Ranking</button>
+    </div>
+  </div>
+
+  <!-- RANKING -->
+  <div id="sc-rank" class="kh-sc">
+    <div style="background:#46178f;padding:1.5rem 1.5rem 0;min-height:420px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;">
+        <h2 style="color:#FFD700;font-size:20px;font-weight:700;">🏆 Ranking</h2>
+        <button onclick="sc('sc-start')" style="background:rgba(255,255,255,0.12);color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;">← Voltar</button>
+      </div>
+      <div id="rank-list" style="max-height:340px;overflow-y:auto;padding-bottom:1rem;"></div>
+    </div>
+  </div>
+
+  <!-- QUESTION -->
+  <div id="sc-q" class="kh-sc">
+    <div style="background:#46178f;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <span id="kh-num" style="color:rgba(255,255,255,0.8);font-size:13px;font-weight:500;white-space:nowrap;"></span>
+      <div style="position:relative;width:52px;height:52px;flex-shrink:0;">
+        <svg width="52" height="52" viewBox="0 0 52 52" aria-hidden="true">
+          <circle cx="26" cy="26" r="22" fill="#3d1278" stroke="rgba(255,255,255,0.2)" stroke-width="4"/>
+          <circle id="kh-ring" cx="26" cy="26" r="22" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-dasharray="138.23" stroke-dashoffset="0" transform="rotate(-90 26 26)"/>
+        </svg>
+        <div id="kh-tnum" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;"></div>
+      </div>
+      <span id="kh-pts" style="color:rgba(255,255,255,0.8);font-size:13px;font-weight:500;white-space:nowrap;"></span>
+    </div>
+    <div style="background:#3d1278;padding:1.5rem;min-height:108px;display:flex;align-items:center;justify-content:center;">
+      <p id="kh-qt" style="color:#fff;font-size:18px;font-weight:500;text-align:center;margin:0;line-height:1.45;"></p>
+    </div>
+    <div style="height:5px;background:rgba(255,255,255,0.1);">
+      <div id="kh-prog" style="height:100%;background:#fff;width:100%;"></div>
+    </div>
+    <div id="kh-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px;background:#1a1a2e;"></div>
+    <div id="kh-fb" style="display:none;">
+      <div id="kh-reaction" style="background:#0d0d1a;padding:20px 16px 12px;text-align:center;position:relative;overflow:hidden;min-height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;">
+        <div id="kh-czn" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;"></div>
+        <div id="kh-ricon" style="position:relative;z-index:1;line-height:1;"></div>
+        <div id="kh-rpts" style="position:relative;z-index:1;font-size:20px;font-weight:700;color:#fff;"></div>
+      </div>
+      <div id="kh-fbmsg" style="padding:12px 20px;font-size:13px;font-weight:500;color:#fff;line-height:1.45;"></div>
+      <button id="kh-nxt" onclick="khNext()" class="kh-nbtn"></button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="sc-end" class="kh-sc">
+    <div id="sc-end-inner" style="background:#46178f;min-height:430px;padding:2rem 1.5rem;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;position:relative;overflow:hidden;">
+      <div id="kh-end-czn" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;"></div>
+      <div id="kh-emascot" style="margin-bottom:.6rem;position:relative;z-index:1;"></div>
+      <div id="kh-fscore" style="color:#FFD700;font-size:50px;font-weight:700;line-height:1;position:relative;z-index:1;"></div>
+      <div style="color:rgba(255,255,255,0.6);font-size:13px;margin:4px 0 6px;position:relative;z-index:1;">pontos</div>
+      <div id="kh-fdet" style="color:rgba(255,255,255,0.9);font-size:17px;font-weight:500;margin-bottom:.6rem;position:relative;z-index:1;"></div>
+      <div id="kh-fmsg" style="background:rgba(255,255,255,0.12);border-radius:10px;padding:.8rem 1.2rem;color:rgba(255,255,255,0.85);font-size:13px;max-width:400px;line-height:1.55;margin-bottom:1rem;position:relative;z-index:1;"></div>
+      <!-- Mini ranking no resultado -->
+      <div style="width:100%;max-width:440px;position:relative;z-index:1;margin-bottom:1rem;">
+        <div style="color:#FFD700;font-size:13px;font-weight:700;margin-bottom:8px;text-align:left;">🏆 Top jogadores</div>
+        <div id="end-rank-list"></div>
+      </div>
+      <div style="display:flex;gap:10px;position:relative;z-index:1;flex-wrap:wrap;justify-content:center;">
+        <button onclick="khRestart()" style="background:rgba(255,255,255,0.15);color:#fff;border:2px solid rgba(255,255,255,0.35);border-radius:10px;font-size:14px;font-weight:700;padding:11px 24px;cursor:pointer;">Jogar novamente</button>
+        <button onclick="showRanking()" style="background:#FFD700;color:#46178f;border:none;border-radius:10px;font-size:14px;font-weight:700;padding:11px 24px;cursor:pointer;">Ver Ranking completo</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const QS_BASE=[
+  {t:"O Mercado Pago é o banco digital de qual grande empresa da América Latina?",o:["Amazon","Mercado Livre","Magazine Luiza","Shopee"],c:1,s:60,e:"O Mercado Pago é o banco digital oficial do Mercado Livre, a empresa mais valiosa da América Latina."},
+  {t:"Qual é o prazo padrão para o cliente receber o dinheiro das vendas feitas na maquininha Point?",o:["30 dias","14 dias","No dia seguinte (D+1)","Na hora (no mesmo dia)"],c:3,s:60,e:"Um dos grandes diferenciais do Mercado Pago é o pagamento na hora: o vendedor recebe o valor de suas vendas no mesmo dia."},
+  {t:"Qual funcionalidade permite transformar o próprio smartphone do cliente em uma maquininha de cartão?",o:["Point Tap","QR Code Físico","TEF Fast","Pix Saque"],c:0,s:60,e:"A Point Tap transforma o celular Android do cliente em uma maquininha de cartão via aproximação (NFC)."},
+  {t:"Qual é a duração aproximada da bateria da Point Smart 2?",o:["12 horas","24 horas","48 horas","72 horas"],c:3,s:60,e:"A Point Smart 2 possui alta autonomia de bateria, durando até 72 horas longe da tomada."},
+  {t:"No mercado de pagamentos, qual é o papel da Adquirente (como o Mercado Pago)?",o:["Apenas fabricar as maquininhas fisicamente","Processar, liquidar e captar transações de cartão","Fiscalizar e cobrar impostos municipais do lojista","Criar o software de frente de caixa (ERP) da loja"],c:1,s:60,e:"A adquirente é a credenciadora encarregada de processar os pagamentos de cartão de crédito e débito e repassar os valores ao vendedor."},
+  {t:"Qual das opções abaixo NÃO é um recurso integrado diretamente na Point Smart 2?",o:["Impressão de recibos e simulador de custos","Cadastro de catálogo de produtos","Emissão de notas e cupons fiscais pelo sistema de gestão","Cobrança obrigatória de taxa de manutenção mensal da conta"],c:3,s:60,e:"A conta do Mercado Pago tem zero taxa de manutenção mensal."},
+  {t:"Quanto rende o dinheiro guardado nos Cofrinhos da conta Mercado Pago?",o:["Menos do que a Poupança tradicional","Até 120% do CDI (com liquidez diária)","50% da taxa Selic ao ano","Não possui rendimento algum"],c:1,s:60,e:"O Cofrinho do Mercado Pago oferece rendimento automático com liquidez diária que pode chegar a 120% do CDI — muito mais que a poupança."},
+  {t:"Além de maquininha e conta, qual benefício de crédito ajuda a alavancar o negócio do cliente?",o:["Empréstimo de Capital de Giro e Dinheiro Express baseado no histórico de vendas","Seguro obrigatório de veículo comercial","Isenção total de impostos estaduais (ICMS)","Financiamento imobiliário de até 30 anos"],c:0,s:60,e:"Quanto mais o cliente vende, melhor o score para liberar linhas de crédito, Capital de Giro e Dinheiro Express."},
+  {t:"Para qual perfil de cliente a Point Smart 2 é PRINCIPALMENTE recomendada?",o:["Para quem vende na rua e quase não usa cartão","Clientes com alto fluxo de vendas no cartão e bom faturamento","Apenas pessoas físicas sem CNPJ","Exclusivamente para grandes multinacionais"],c:1,s:60,e:"A Smart 2 é recomendada principalmente para estabelecimentos com bom faturamento e alto volume diário de uso de cartões."},
+  {t:"Quais são os 3 pilares que precisam atuar em conjunto no ecossistema TEF?",o:["Adquirente (MP), Casa TEF e Automação Comercial (Software House)","Banco Central, Correios e Procon","Maquininha Point, Chip 4G e Chave Pix","Aplicativo MP, WhatsApp e Instagram"],c:0,s:60,e:"O TEF funciona na integração perfeita entre a Adquirente (Mercado Pago), a Casa TEF (ex: Paygo/Fiserv) e o Software de Gestão/Automação (ERP)."},
+  {t:"Na analogia do vídeo, a Adquirente é comparada a qual elemento em uma 'cidade de pagamentos'?",o:["A rodovia da bandeira","O cofre do banco emissor","Um carro forte super rápido","O semáforo do Banco Central"],c:2,s:60,e:"A adquirente é o 'carro forte': pega os dados na maquininha, percorre a rodovia da bandeira (Visa/Mastercard), bate na porta do cofre (banco emissor) e volta com a aprovação na hora."},
+  {t:"O que significa D0 no contexto de recebimentos?",o:["Prazo de 0 juros no cartão de crédito","Recebimento no mesmo dia da venda","Débito automático sem taxa","Dia zero do contrato com a adquirente"],c:1,s:60,e:"D é o dia da transação e zero significa zero dias de espera — o dinheiro da venda cai na conta do lojista no mesmo dia."},
+  {t:"Quantos PINPADs o Mercado Pago disponibiliza gratuitamente por CNPJ no sistema TEF?",o:["1 PINPAD","2 PINPADs","3 PINPADs","5 PINPADs"],c:2,s:60,e:"O Mercado Pago disponibiliza até 3 PINPADs gratuitos por CNPJ, permitindo montar ou expandir até 3 caixas sem custo de equipamento."},
+  {t:"Quais são os 3 pilares do ecossistema completo do Mercado Pago?",o:["Maquininha, PIX e Link de Pagamento","Crédito, Débito e Conta Digital","Adquirência, Banking e Software de Gestão","Point, QR Code e TEF"],c:2,s:60,e:"O ecossistema se baseia em: Adquirência (cobranças via máquina, link ou QR), Banking (conta, gestão de caixa e crédito) e Software de Gestão (estoque, nota fiscal, relatórios)."},
+  {t:"O que é uma TEF House?",o:["Uma loja física do Mercado Pago","O aparelho PINPAD instalado no caixa","Empresa especializada na licença do software TEF","Um hub de pagamentos internacionais"],c:2,s:60,e:"As TEF Houses (ex: Paygo/Fiserv) fornecem a licença do software de comunicação TEF — contratada separadamente da adquirente que fornece o PINPAD físico."},
+  {t:"Como o Mercado Pago se diferencia de uma adquirente tradicional?",o:["Aceita apenas pagamentos do Mercado Livre","É ao mesmo tempo banco digital e adquirente","Não trabalha com bandeiras internacionais","Atende somente pessoas físicas"],c:1,s:60,e:"O Mercado Pago é dono do 'cofre' (banco digital) e do 'carro forte' (adquirente), cortando intermediários: a mesma empresa entrega a maquininha e processa tudo na retaguarda."},
+  {t:"No sistema TEF, como o valor da compra aparece no PINPAD do cliente?",o:["O cliente digita o valor diretamente no PINPAD","O caixa precisa digitar o valor manualmente","Automaticamente ao fechar a compra no sistema do caixa","Via QR Code gerado pela maquininha"],c:2,s:60,e:"O TEF integra o PINPAD ao computador do caixa: quando o operador fecha a compra no sistema, o valor já aparece automaticamente na tela do PINPAD."},
+  {t:"Para qual tipo de estabelecimento o TEF é considerado 'necessidade absoluta', não um luxo?",o:["Autônomos e ambulantes com baixo volume","Lojas online sem atendimento presencial","Supermercados e lojas com muitos caixas e alto fluxo","Restaurantes de pequeno porte"],c:2,s:60,e:"Imagina um supermercado com 30 caixas usando maquininha avulsa — seria o caos. O TEF centraliza tudo, agiliza as filas e permite usar várias adquirentes no mesmo aparelho."},
+  {t:"Qual era o prazo tradicional de recebimento nas adquirentes antigas para vendas no crédito?",o:["D+1 (dia seguinte)","D+7 (uma semana)","D+14 (quinze dias)","D+30 (trinta dias)"],c:3,s:60,e:"Antes era comum o lojista vender no crédito e esperar 30 longos dias para o dinheiro cair — o D30. Isso travava o fluxo de caixa e impedia a reposição imediata de estoque."},
+  {t:"Quanto rende automaticamente o dinheiro parado na conta PJ do Mercado Pago?",o:["Igual à poupança tradicional","Até 100% do CDI","Até 115% do CDI","Até 150% do CDI"],c:2,s:60,e:"O dinheiro parado na conta PJ do Mercado Pago rende automaticamente até 115% do CDI — bem acima da poupança."},
+  {t:"Na analogia da 'cidade de pagamentos', o que representa a bandeira do cartão (Visa/Mastercard)?",o:["O carro forte super rápido","O cofre do banco emissor","A rodovia que conecta todos","O pedágio de liquidação"],c:2,s:60,e:"A bandeira (Visa, Mastercard) é a rodovia: a via por onde os dados do pagamento trafegam entre a adquirente e o banco emissor."},
+  {t:"Na analogia da 'cidade de pagamentos', o que representa o banco que emitiu o cartão do cliente?",o:["A rodovia da bandeira","O carro forte da adquirente","O semáforo do Banco Central","O cofre que guarda o dinheiro do cliente"],c:3,s:60,e:"O banco emissor é o cofre: é ele quem guarda o dinheiro do cliente e dá (ou nega) a aprovação quando a adquirente 'bate na sua porta'."},
+  {t:"O que é o PINPAD no sistema TEF?",o:["Software de gestão instalado no computador","Aparelho físico de leitura de cartão conectado ao caixa","Roteador de internet para maquininhas","Impressora fiscal integrada ao sistema"],c:1,s:60,e:"O PINPAD é o aparelho físico onde o cliente insere ou aproxima o cartão. Ele fica ligado por cabo ao computador do caixa, integrado ao software de gestão via TEF."},
+  {t:"Como o PINPAD se conecta ao computador do caixa no sistema TEF?",o:["Via Bluetooth","Via Wi-Fi da loja","Por um cabo físico direto ao computador","Via chip 4G próprio"],c:2,s:60,e:"O PINPAD é conectado fisicamente por cabo ao computador do caixa. Isso garante latência mínima e máxima confiabilidade na comunicação."},
+  {t:"O que o recebimento em D0 permite ao lojista fazer logo após uma venda?",o:["Parcelar o pagamento do fornecedor em 12x sem juros","Isentar-se de impostos naquele dia","Repor estoque imediatamente com o dinheiro que acabou de entrar","Emitir nota fiscal retroativa automaticamente"],c:2,s:60,e:"Com D0, o dinheiro da venda já está disponível no mesmo dia — o lojista pode comprar mais estoque, pagar fornecedores ou deixar rendendo na conta do MP."},
+  {t:"Qual era a principal dor do lojista com o modelo D30 das adquirentes tradicionais?",o:["Taxas de juros abusivas no parcelamento","Obrigação de conta em banco físico","Fluxo de caixa travado por 30 dias","Cobrança dupla de IOF nas transações"],c:2,s:60,e:"Com D30, o lojista vendia e ficava 30 dias sem ver o dinheiro. Isso travava o caixa e impedia a reposição imediata de estoque."},
+  {t:"O que a 'teia de contratos' das adquirentes tradicionais representava para o lojista?",o:["Necessidade de contador terceirizado obrigatório","Taxa diferente para débito, crédito e por bandeira, com cobranças ocultas","Exigência de três contratos simultâneos por CNPJ","Contrato mínimo de 24 meses sem rescisão"],c:1,s:60,e:"Nas adquirentes antigas havia uma taxa para débito, outra para crédito, outra por bandeira e ainda cobranças extras surpresa. O MP unifica e simplifica tudo isso."},
+  {t:"Para qual perfil de negócio a maquininha avulsa (Point) é a solução ideal?",o:["Supermercados com mais de 10 caixas simultâneos","Redes de franquias com gestão centralizada","Autônomos e lojas com fluxo de caixa menor","Indústrias com faturamento acima de R$1 milhão/mês"],c:2,s:60,e:"A maquininha avulsa é perfeita para autônomos e pequenos lojistas com menor volume de vendas. Para grandes operações com múltiplos caixas, o TEF é a solução certa."},
+  {t:"O que é o 'número lógico' gerado pelo sistema TEF?",o:["O CPF do operador de caixa cadastrado no sistema","O número de série físico da maquininha","Identificação única por caixa que rastreia cada centavo como uma 'digital'","O código do produto vendido em cada transação"],c:2,s:60,e:"O número lógico funciona como uma 'digital' de cada caixa: garante rastreamento individual de cada centavo transacionado, dando segurança e controle total para o gestor."},
+  {t:"Qual grande benefício o TEF mantém mesmo operando em grande escala com muitos caixas?",o:["Parcelamento sem juros por 24x automático","Eliminação da necessidade de conciliação bancária","Recebimento em D0 é mantido mesmo no grande volume","Zeramento das taxas de interchange"],c:2,s:60,e:"A cereja do bolo: o TEF do Mercado Pago mantém o recebimento em D0 mesmo em operações de grande escala — você ganha escala nos caixas sem abrir mão do dinheiro na hora."},
+  {t:"O que significa a conta PJ do Mercado Pago ter 'zero taxa de manutenção'?",o:["Gratuita apenas no primeiro ano contratual","Taxa variável conforme o faturamento mensal","Sem qualquer cobrança mensal para manter a conta ativa","Sem mensalidade, mas com taxa de abertura única"],c:2,s:60,e:"A conta PJ do Mercado Pago não cobra mensalidade — zero. Isso elimina um custo fixo que bancos tradicionais impõem independentemente do faturamento."},
+  {t:"Ao unir Adquirência, Banking e Software de Gestão em um único ecossistema, o que muda?",o:["O empreendedor deixa de precisar de funcionários","A vida de quem está empreendendo muda de um jeito absurdo","O imposto de renda é calculado automaticamente","O CNPJ é transferido para o Mercado Livre"],c:1,s:60,e:"Quando os três pilares se encontram sob o mesmo teto, o empreendedor tem controle financeiro completo em um único lugar."},
+  {t:"O que o sistema TEF permite fazer com múltiplas adquirentes?",o:["Contratar todas gratuitamente via Mercado Pago","Usar várias adquirentes no mesmo PINPAD simultaneamente","Eliminar as bandeiras de cartão da operação","Reduzir o número de caixas necessários pela metade"],c:1,s:60,e:"O TEF permite configurar múltiplas adquirentes no mesmo PINPAD, dando ao lojista flexibilidade para escolher as melhores taxas por bandeira ou tipo de transação."},
+  {t:"Qual é o impacto prático de ter cartão sem anuidade no ecossistema Mercado Pago?",o:["Reduz custos mensais do lojista sem abrir mão de crédito","Permite saques ilimitados em caixas eletrônicos","Concede cashback automático de 5% em tudo","É exclusivo para clientes Meli+ Diamante"],c:0,s:60,e:"O cartão sem anuidade elimina mais um custo fixo da operação — junto com a conta gratuita e o rendimento automático do saldo."},
+  {t:"Qual reflexão o vídeo deixa ao final sobre o ecossistema de pagamentos digitais?",o:["Se as operações comerciais estão prontas para largar os modelos velhos e abraçar o digital","Se vale a pena trocar de bandeira de cartão","Se o TEF vai substituir completamente o PIX","Se o Mercado Pago vai absorver todos os bancos tradicionais"],c:0,s:60,e:"A reflexão final: se o ecossistema financeiro deixou de ser barreira e virou motor de crescimento, será que as operações de hoje estão prontas para abraçar todo esse potencial digital?"}
+];
+
+const COLS=[{bg:'#e21b3c',sh:'▲'},{bg:'#1368ce',sh:'◆'},{bg:'#d89e00',sh:'●'},{bg:'#26890c',sh:'■'}];
+const LBL=['A','B','C','D'];
+const CIRC=138.23;
+const CFC=['#e21b3c','#1368ce','#d89e00','#26890c','#ff6b6b','#ffd700','#00d4ff','#ff89c4','#a78bfa','#34d399'];
+const LS_KEY='quiz_mp_leaderboard';
+let QS,qi,score,nok,tmr,tl,tt,done,playerName;
+
+function getLeaderboard(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'[]');}catch(e){return[];}}
+function saveLeaderboard(lb){localStorage.setItem(LS_KEY,JSON.stringify(lb));}
+
+function addScore(name,pts,correct,total){
+  const lb=getLeaderboard();
+  lb.push({name,score:pts,correct,total,date:new Date().toLocaleDateString('pt-BR'),ts:Date.now()});
+  lb.sort((a,b)=>b.score-a.score);
+  saveLeaderboard(lb.slice(0,50));
+}
+
+function renderRankList(containerId,limit){
+  const lb=getLeaderboard();
+  const el=document.getElementById(containerId);
+  if(!el)return;
+  if(!lb.length){el.innerHTML='<div style="color:rgba(255,255,255,0.5);font-size:13px;text-align:center;padding:1rem;">Nenhuma partida registrada ainda.</div>';return;}
+  const medals=['🥇','🥈','🥉'];
+  el.innerHTML=lb.slice(0,limit||10).map((r,i)=>{
+    const pct=Math.round(r.correct/r.total*100);
+    return '<div class="rank-row">'
+      +'<span class="rank-medal">'+(medals[i]||'#'+(i+1))+'</span>'
+      +'<span class="rank-name">'+escHtml(r.name)+'</span>'
+      +'<span class="rank-detail">'+pct+'% · '+r.date+'</span>'
+      +'<span class="rank-score">'+r.score.toLocaleString('pt-BR')+'</span>'
+      +'</div>';
+  }).join('');
+}
+
+function escHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+function showRanking(){
+  renderRankList('rank-list',20);
+  sc('sc-rank');
+}
+
+function face(type){
+  const h='<svg width="88" height="88" viewBox="0 0 88 88" xmlns="http://www.w3.org/2000/svg">';
+  if(type==='happy') return h+'<circle cx="44" cy="44" r="40" fill="#009ee3" stroke="#fff" stroke-width="3"/><circle cx="31" cy="35" r="8" fill="#fff"/><circle cx="31" cy="35" r="5" fill="#1a1a2e"/><circle cx="29" cy="32" r="2" fill="#fff"/><circle cx="57" cy="35" r="8" fill="#fff"/><circle cx="57" cy="35" r="5" fill="#1a1a2e"/><circle cx="55" cy="32" r="2" fill="#fff"/><path d="M28 54 Q44 70 60 54" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="36" y="70" width="22" height="13" rx="4" fill="#FFD700"/><text x="47" y="80" text-anchor="middle" font-size="8" font-weight="700" fill="#46178f" font-family="Montserrat,sans-serif">MP</text></svg>';
+  if(type==='star') return h+'<circle cx="44" cy="44" r="40" fill="#26890c" stroke="#fff" stroke-width="3"/><polygon points="22,16 25,26 35,26 27,32 30,42 22,36 14,42 17,32 9,26 19,26" fill="#FFD700"/><polygon points="66,16 69,26 79,26 71,32 74,42 66,36 58,42 61,32 53,26 63,26" fill="#FFD700"/><path d="M20 58 Q44 78 68 58" stroke="#fff" stroke-width="4.5" fill="rgba(255,255,255,0.15)" stroke-linecap="round"/></svg>';
+  if(type==='sad') return h+'<circle cx="44" cy="44" r="40" fill="#e21b3c" stroke="#fff" stroke-width="3"/><line x1="25" y1="27" x2="37" y2="39" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/><line x1="37" y1="27" x2="25" y2="39" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/><line x1="51" y1="27" x2="63" y2="39" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/><line x1="63" y1="27" x2="51" y2="39" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/><path d="M26 62 Q44 50 62 62" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/></svg>';
+  if(type==='shock') return h+'<circle cx="44" cy="44" r="40" fill="#d89e00" stroke="#fff" stroke-width="3"/><circle cx="30" cy="33" r="9" fill="#fff"/><circle cx="30" cy="33" r="6" fill="#1a1a2e"/><circle cx="30" cy="33" r="2.5" fill="#fff"/><circle cx="58" cy="33" r="9" fill="#fff"/><circle cx="58" cy="33" r="6" fill="#1a1a2e"/><circle cx="58" cy="33" r="2.5" fill="#fff"/><ellipse cx="44" cy="60" rx="11" ry="13" fill="#fff"/><ellipse cx="44" cy="60" rx="8" ry="10" fill="#1a1a2e"/></svg>';
+  return h+'<circle cx="44" cy="44" r="40" fill="#009ee3" stroke="#fff" stroke-width="3"/><circle cx="31" cy="36" r="8" fill="#fff"/><circle cx="31" cy="36" r="5" fill="#1a1a2e"/><circle cx="29" cy="33" r="2" fill="#fff"/><circle cx="57" cy="36" r="8" fill="#fff"/><circle cx="57" cy="36" r="5" fill="#1a1a2e"/><circle cx="55" cy="33" r="2" fill="#fff"/><path d="M28 56 Q44 68 60 56" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round"/><rect x="36" y="70" width="22" height="13" rx="4" fill="#FFD700"/><text x="47" y="80" text-anchor="middle" font-size="8" font-weight="700" fill="#46178f" font-family="Montserrat,sans-serif">MP</text></svg>';
+}
+
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function confetti(zoneId,count){
+  const z=document.getElementById(zoneId);if(!z)return;z.innerHTML='';
+  for(let i=0;i<count;i++){
+    const p=document.createElement('div');
+    const sz=(Math.random()*9+6)+'px';
+    const left=(Math.random()*94)+'%';
+    const delay=(Math.random()*0.7).toFixed(2);
+    const dur=(Math.random()*0.9+0.9).toFixed(2);
+    const col=CFC[Math.floor(Math.random()*CFC.length)];
+    const br=Math.random()>.5?'50%':'3px';
+    p.style.cssText='position:absolute;width:'+sz+';height:'+sz+';background:'+col+';border-radius:'+br+';left:'+left+';top:-10px;animation:confetti-drop '+dur+'s '+delay+'s ease-in forwards;';
+    z.appendChild(p);
+  }
+}
+
+function sc(id){['sc-start','sc-rank','sc-q','sc-end'].forEach(s=>document.getElementById(s).classList.toggle('on',s===id));}
+function reflow(el){el.className='';void el.offsetWidth;}
+
+function khStart(){
+  const inp=document.getElementById('player-name');
+  const err=document.getElementById('name-err');
+  const name=(inp.value||'').trim();
+  if(!name){err.textContent='Por favor, digite seu nome para continuar!';inp.focus();return;}
+  err.textContent='';
+  playerName=name;
+  QS=shuffle(QS_BASE);qi=0;score=0;nok=0;done=false;
+  sc('sc-q');loadQ(0);
+}
+
+function loadQ(i){
+  done=false;clearInterval(tmr);
+  const q=QS[i];tt=q.s;tl=q.s;
+  document.getElementById('kh-num').textContent='Pergunta '+(i+1)+' / '+QS.length;
+  document.getElementById('kh-pts').textContent=score+' pts';
+  const qtEl=document.getElementById('kh-qt');
+  reflow(qtEl);qtEl.className='a-slide';qtEl.textContent=q.t;
+  const ring=document.getElementById('kh-ring');
+  const tn=document.getElementById('kh-tnum');
+  ring.setAttribute('stroke-dashoffset','0');ring.style.stroke='#fff';tn.style.color='#fff';tn.textContent=tl;
+  const pg=document.getElementById('kh-prog');
+  pg.style.transition='none';pg.style.width='100%';
+  const g=document.getElementById('kh-grid');g.innerHTML='';
+  q.o.forEach(function(opt,idx){
+    const b=document.createElement('button');
+    b.className='kh-abtn a-slide';
+    b.style.background=COLS[idx].bg;
+    b.style.animationDelay=(idx*75)+'ms';
+    b.innerHTML='<span style="font-size:22px;flex-shrink:0;padding-top:1px">'+COLS[idx].sh+'</span><span>'+opt+'</span>';
+    b.onclick=function(){pick(idx);};b.id='kho'+idx;
+    g.appendChild(b);
+  });
+  document.getElementById('kh-fb').style.display='none';
+  document.getElementById('kh-czn').innerHTML='';
+  setTimeout(function(){pg.style.transition='width '+tt+'s linear';pg.style.width='0%';tmr=setInterval(tick,1000);},120);
+}
+
+function tick(){
+  tl--;
+  const tn=document.getElementById('kh-tnum');const ring=document.getElementById('kh-ring');
+  tn.textContent=tl;ring.setAttribute('stroke-dashoffset',(CIRC*(1-tl/tt)).toFixed(2));
+  if(tl<=10){ring.style.stroke='#e21b3c';tn.style.color='#ffaaaa';}
+  else if(tl<=20){ring.style.stroke='#d89e00';tn.style.color='#ffe080';}
+  if(tl<=0){clearInterval(tmr);if(!done)pick(-1);}
+}
+
+function pick(idx){
+  if(done)return;done=true;clearInterval(tmr);
+  const q=QS[qi];const good=idx===q.c;let pts=0;
+  if(good){pts=500+Math.round(500*tl/tt);score+=pts;nok++;}
+  for(let i=0;i<q.o.length;i++){
+    const b=document.getElementById('kho'+i);if(!b)continue;
+    b.disabled=true;
+    if(i===q.c){b.style.outline='4px solid #fff';b.style.outlineOffset='2px';}
+    else{b.style.opacity='0.22';}
+  }
+  const ri=document.getElementById('kh-ricon');const rp=document.getElementById('kh-rpts');
+  const rx=document.getElementById('kh-reaction');const msg=document.getElementById('kh-fbmsg');const nxt=document.getElementById('kh-nxt');
+  let fbBg,txt,faceType,animCls,rxBg;
+  if(idx===-1){fbBg='#444';txt='Tempo esgotado! A correta era: '+LBL[q.c]+'. '+q.e;faceType='shock';animCls='a-bounce';rxBg='#332200';rp.textContent='Tempo esgotado!';rp.style.color='#ffd700';}
+  else if(good){fbBg='#26890c';txt=q.e;faceType='star';animCls='a-tada';rxBg='#0a2500';rp.textContent='+'+pts+' pontos!';rp.style.color='#7dff7d';confetti('kh-czn',24);}
+  else{fbBg='#e21b3c';txt='A correta era: '+LBL[q.c]+'. '+q.e;faceType='sad';animCls='a-shake';rxBg='#2a0000';rp.textContent='Errado...';rp.style.color='#ff8888';}
+  rx.style.background=rxBg;msg.style.background=fbBg;msg.textContent=txt;
+  document.getElementById('kh-pts').textContent=score+' pts';
+  nxt.textContent=qi<QS.length-1?'Próxima pergunta →':'Ver resultado →';
+  reflow(ri);ri.innerHTML=face(faceType);ri.className=animCls;
+  document.getElementById('kh-fb').style.display='block';
+}
+
+function khNext(){qi++;if(qi>=QS.length)showEnd();else loadQ(qi);}
+
+function showEnd(){
+  addScore(playerName,score,nok,QS.length);
+  sc('sc-end');
+  const pct=Math.round(nok/QS.length*100);
+  document.getElementById('kh-fdet').textContent=playerName+': '+nok+' de '+QS.length+' corretas ('+pct+'%)';
+  let faceType,fmsg;
+  if(pct===100){faceType='star';fmsg='Perfeito! Você é um especialista absoluto no ecossistema Mercado Pago!';}
+  else if(pct>=80){faceType='star';fmsg='Excelente! Você conhece muito bem o ecossistema Mercado Pago. Parabéns!';}
+  else if(pct>=60){faceType='happy';fmsg='Muito bom! Você tem um conhecimento sólido do Mercado Pago. Continue assim!';}
+  else if(pct>=40){faceType='sad';fmsg='Bom começo! Vale revisar os tópicos de adquirência, produtos e crédito do MP.';}
+  else{faceType='sad';fmsg='Continue estudando! O ecossistema Mercado Pago é rico em produtos e oportunidades.';}
+  const em=document.getElementById('kh-emascot');reflow(em);em.innerHTML=face(faceType);em.className='a-bounce';
+  document.getElementById('kh-fmsg').textContent=fmsg;
+  let disp=0;const tgt=score;const el=document.getElementById('kh-fscore');
+  const step=Math.max(1,Math.ceil(tgt/50));
+  const ticker=setInterval(function(){disp=Math.min(disp+step,tgt);el.textContent=disp.toLocaleString('pt-BR');if(disp>=tgt)clearInterval(ticker);},35);
+  if(pct>=60) setTimeout(function(){confetti('kh-end-czn',35);},400);
+  renderRankList('end-rank-list',5);
+}
+
+function khRestart(){sc('sc-start');}
+
+document.getElementById('ms-idle').innerHTML=face('idle');
+document.getElementById('player-name').addEventListener('keydown',function(e){if(e.key==='Enter')khStart();});
+</script>
+</body>
+</html>
