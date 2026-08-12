@@ -198,7 +198,7 @@ function enviarResultado(){
   if(SCRIPT_URL==='COLE_AQUI_A_URL_DO_APPS_SCRIPT'){st.style.color='#ffaaaa';st.textContent='⚠️ URL do Apps Script não configurada ainda.';return;}
   st.style.color='rgba(255,255,255,0.6)';st.textContent='Enviando...';
   const url=SCRIPT_URL+'?nome='+encodeURIComponent(nome)+'&email='+encodeURIComponent(email)+'&hub='+encodeURIComponent(hub)+'&pts='+score+'&acertos='+nok;
-  fetch(url,{mode:'no-cors'})
+  fetch(url,{mode:'no-cors',credentials:'include'})
     .then(function(){
       st.style.color='#7dff7d';
       st.textContent='✓ Resultado enviado com sucesso!';
